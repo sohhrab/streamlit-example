@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import plotly.express as px
 
 # ... (likelihood_scale, impact_scale, risk_zones, calculate_risk_score remain the same)
 
@@ -118,7 +119,22 @@ def collect_and_assess_risk():
             st.success("Risk assessment saved to database!")
         except Exception as e:
             st.error(f"Error saving to database: {e}") 
+df = pd.DataFrame({
+    'Likelihood': list(likelihood_scale.keys()),
+    'Impact': list(impact_scale.keys()),
+    'Risk Score': [calculate_risk_score(l, i) for l in likelihood_scale.keys() for i in impact_scale.keys()]
+ }) 
 
+ # Create heatmap
+fig = px.imshow(df, 
+                x = 'Likelihood', 
+                y = 'Impact',
+                color = 'Risk Score',
+                color_continuous_scale='RdYlGn', # Adjust colorscale if desired
+                aspect="auto"
+               )
+
+st.plotly_chart(fig) 
 
 # Main Streamlit App
 if __name__ == "__main__":
