@@ -137,5 +137,5 @@ def collect_and_assess_risk():
 #st.plotly_chart(fig) 
 
 # Main Streamlit App
-#if __name__ == "__main__":
-#    collect_and_assess_risk()
+if __name__ == "__main__":
+    collect_and_assess_risk()
